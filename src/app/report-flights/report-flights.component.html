@@ -1,0 +1,66 @@
+<section>
+  <h1 class="text-3xl font-bold pt-10 pb-2 border-b border-gray-300">
+    Flights Weather
+  </h1>
+  <!-- bg-slate-800 -->
+  <div class="mt-5 w-2/4 flex items-center">
+    <button
+      type="button"
+      class="bg-black p-2 rounded-md"
+      (click)="fileUpload.click()"
+    >
+      Select CSV
+    </button>
+    <span class="ml-5 font-bold uppercase">{{ fileName }}</span>
+    <input
+      #fileUpload
+      id="file-upload-flights"
+      type="file"
+      accept=".csv"
+      (change)="processCSV($event)"
+      style="display: none"
+    />
+  </div>
+
+  <!-- <section>
+    <h3 class="text-2xl font-bold pt-10 pb-2">IATA Codes</h3>
+    @for (item of uniqueIataCodes; track $index) {
+    <button
+      type="button"
+      class="p-2 rounded-md bg-neutral-600 hover:bg-neutral-700 m-1 w-20"
+    >
+      {{ item }}
+    </button>
+    }
+  </section> -->
+  <!-- flex flex-wrap -->
+  <section class="grid grid-cols-4 gap-4 mt-5">
+    @for (item of dataFlights; track $index) {
+    <div class="flex flex-col bg-neutral-400 rounded-md items-center">
+      <span class="my-3">
+        Ticket: <strong> #{{ item.flight_num }}</strong>
+      </span>
+      <div class="flex justify-around w-full">
+        <div class="flex flex-col items-center mb-3">
+          <p class="text-xs text-gray-400">Origin</p>
+          <strong> {{ item.origin_iata_code }}</strong>
+          <img src="https://openweathermap.org/img/wn/{{item.weather.origin.weather[0].icon}}@2x.png">
+          <p class="font-bold">{{item.weather.origin.weather[0].main}}</p>
+          <span class="text-sm">
+            {{ truncate(item.weather.origin.main.temp - 273.15) }} °C
+          </span>
+        </div>
+        <div class="flex flex-col items-center">
+          <p class="text-xs text-gray-400">Destination</p>
+          <strong> {{ item.destination_iata_code }}</strong>
+          <img src="https://openweathermap.org/img/wn/{{item.weather.destination.weather[0].icon}}@2x.png">
+          <p class="font-bold">{{item.weather.destination.weather[0].main}}</p>
+          <span class="text-sm">
+            {{ truncate(item.weather.destination.main.temp - 273.15) }} °C
+          </span>
+        </div>
+      </div>
+    </div>
+    }
+  </section>
+</section>
